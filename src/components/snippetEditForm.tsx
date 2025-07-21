@@ -5,7 +5,7 @@ import Editor from "@monaco-editor/react";
 import { useState } from "react";
 // if multiple actions in same file import: * as actions will allow access to all actions
 // in said file! import with: actions.nameOfAction
-import { editSnippet } from "@/actions/snippets/editSnippet.ts";
+import { editSnippet } from "@/actions/snippets/editSnippet";
 
 interface SnippetEditFormProps {
   snippet: Snippet;
