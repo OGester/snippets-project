@@ -41,3 +41,16 @@ export default async function SnippetShowPage(props: SnippetShowPageProps) {
     </div>
   );
 }
+// function that runs on BUILD to enable
+// caching eventhough this route is dynamic!
+
+export async function generateStaticParams() {
+  const snippets = await db.snippet.findMany();
+
+  return snippets.map((snippet) => {
+    return {
+      // generateStaticParams expects a string snippet.id is a number
+      id: snippet.id.toString(),
+    };
+  });
+}
