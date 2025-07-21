@@ -9,29 +9,39 @@ export default async function createSnippet(
   formState: { message: string },
   formData: FormData
 ) {
-  const title = formData.get("title");
-  const code = formData.get("code");
-  // validating form inputs
-  if (typeof title !== "string" || title.length < 3) {
-    return {
-      message: "Title is too short",
-    };
-  }
-  if (typeof code !== "string" || code.length < 10) {
-    return {
-      message: "Code snippet needs to be longer",
-    };
-  }
+  try {
+    const title = formData.get("title");
+    const code = formData.get("code");
+    // validating form inputs
+    if (typeof title !== "string" || title.length < 3) {
+      return {
+        message: "Title is too short",
+      };
+    }
+    if (typeof code !== "string" || code.length < 10) {
+      return {
+        message: "Code snippet needs to be longer",
+      };
+    }
 
-  // create snippet to database
-  const snippet = await db.snippet.create({
-    data: {
-      title,
-      code,
-    },
-  });
-  console.log("[Snippet to create]", snippet);
-
-  // redirect back tom homepage after submission
+    // create snippet to database
+    await db.snippet.create({
+      data: {
+        title,
+        code,
+      },
+    });
+  } catch (err: unknown) {
+    if (err instanceof Error) {
+      return {
+        message: err.message,
+      };
+    } else {
+      return {
+        message: "Something went wrong...",
+      };
+    }
+  }
+  // redirect back to homepage after submission
   redirect("/");
 }
