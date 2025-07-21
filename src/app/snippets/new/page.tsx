@@ -1,4 +1,4 @@
-import createSnippet from "@/actions/snippets/CreateSnippet";
+import createSnippet from "@/actions/snippets/createSnippet";
 
 export default function SnippetCreatePage() {
   return (

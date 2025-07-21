@@ -3,6 +3,9 @@
 import type { Snippet } from "@prisma/client";
 import Editor from "@monaco-editor/react";
 import { useState } from "react";
+// if multiple actions in same file import: * as actions will allow access to all actions
+// in said file! import with: actions.nameOfAction
+import { editSnippet } from "@/actions/snippets/editSnippet.ts";
 
 interface SnippetEditFormProps {
   snippet: Snippet;
@@ -17,6 +20,8 @@ export default function SnippetEditForm({ snippet }: SnippetEditFormProps) {
     setCode(value);
   };
 
+  const editSnippetAction = editSnippet.bind(null, snippet.id, code);
+
   return (
     <div>
       <Editor
@@ -30,6 +35,9 @@ export default function SnippetEditForm({ snippet }: SnippetEditFormProps) {
         // callback to handle changes made to the snippet code
         onChange={handleEditorChange}
       />
+      <form action={editSnippetAction}>
+        <button className="p-2 border rounded">Save</button>
+      </form>
     </div>
   );
 }
